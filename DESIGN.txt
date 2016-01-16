@@ -1,0 +1,16 @@
+Genre: 
+Real Time Strategy
+
+Consumer tempting, ear popping, name and a brief back story (or the game's epic challenge):
+CellCraft
+You are the immune system of someone who's suddenly contracted a rare and deadly virus. You are the last line of defense. It is up to you to stop this viral menace. This is a matter of life and death. 
+
+Goal (how to win the game or advance levels):
+The goal of the game is to gain control of the entire map in the elimination mode by wiping out the enemy
+or survive a set amount of time in defense mode.
+
+Basic mechanics (how to play the game)
+The basic mechanics are placing structures, building units, and selecting and controlling units. This will be done through mouse clicks and mouse dragging. The player will start out with a certain number of structures/units in a map, with an enemy also on the map with a certain number of structures/units. The player will select units by clicking/dragging over them, and after selecting a location, the units will begin to move to that location. There will be different units with different strengths, such as cheap, simple units and move advanced, costly, and powerful units. The player will build "glands", resource producers which produce these units (immune cells). At the same time, the enemy (the virus) will be performing actions based on an algorithm. Opposing units that collide with each other will stop and battle until one survives. Capturing an enemy's structure requires attacking it with your units.
+
+How its levels or modes differ
+The enemy will have different behaviors based on elimination mode or defense mode. Both the layout of the map and the goals will also differ.
