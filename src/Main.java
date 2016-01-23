@@ -10,16 +10,20 @@ import javafx.util.Duration;
  * This is the main program, it is basically boilerplate to create
  * an animated scene.
  * 
- * @author Robert C. Duvall
+ * @author Austin Hua
  */
 public class Main extends Application {
-    public static final int SIZE = 400;
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 600;
+    public static final int NUMCOLS = 50;
+    public static final int NUMROWS = 30;
+   	    
     public static final int FRAMES_PER_SECOND = 60;
     private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
     private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-    private ExampleGame myGame;
-
+    private CellCraft myGame;
+    
 
     /**
      * Set things up at the beginning.
@@ -27,11 +31,11 @@ public class Main extends Application {
     @Override
     public void start (Stage s) {
         // create your own game here
-        myGame = new ExampleGame();
+        myGame = new CellCraft();
         s.setTitle(myGame.getTitle());
 
         // attach game to the stage and display it
-        Scene scene = myGame.init(SIZE, SIZE);
+        Scene scene = myGame.init(new GameMap(WIDTH, HEIGHT, NUMCOLS, NUMROWS));
         s.setScene(scene);
         s.show();
 
