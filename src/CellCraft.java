@@ -5,6 +5,7 @@ import java.io.*;
 
 import javafx.scene.*;
 import javafx.scene.canvas.*;
+import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -21,7 +22,8 @@ class CellCraft {
     public static final String TITLE = "CellCraft";
     private Scene myScene;
     private Group root;
-    private GraphicsContext gc;    
+    private GraphicsContext gc;
+	private GraphicsContext selectionGC;
     private GameMap myMap;
     
     private Point pointPressed;
@@ -51,10 +53,8 @@ class CellCraft {
         myScene = new Scene(root, myMap.width(), myMap.height(), Color.GREY);
         // root.getChildren().add(new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(splashScreen))));
         // while(!enterPressed) {}
-        // Add canvas object
-        Canvas canvas = new Canvas(myMap.width(), myMap.height());
-        gc = canvas.getGraphicsContext2D();
-        root.getChildren().add(canvas);
+        addCanvas();
+        addSelectionCanvas();
         // draw the map
         myMap.drawMap(gc, mapElements, root); 
         setUpInputResponses(myScene);
@@ -77,6 +77,8 @@ class CellCraft {
     		}
     	}
     	myMap.drawMapElements(gc, mapElements, root);
+		selectionGC.clearRect(0, 0, myMap.width(), myMap.height());
+		highlightSelected();
     
     }
 
@@ -156,7 +158,8 @@ class CellCraft {
     			if (mapGrid[i][j] instanceof Unit && ((Unit)mapGrid[i][j]).isFriendly()) {
     				Unit selection = (Unit)mapGrid[i][j];
     				selection.select();
-    				curSelected.add(selection);			
+    				curSelected.add(selection);
+    				highlightSelected();
     			}
     		}
     	}
@@ -174,19 +177,38 @@ class CellCraft {
     		u.deselect();
     	}
     	curSelected.clear();
+		selectionGC.clearRect(0, 0, myMap.width(), myMap.height());
     }
+    
+    private void highlightSelected(){
+		selectionGC.setLineWidth(5.0);
+		selectionGC.setStroke(Color.CORNFLOWERBLUE);
+		for(MapElement m : curSelected) {
+			selectionGC.strokeRect(m.x() * myMap.cellWidth(), m.y()*myMap.cellHeight(), myMap.cellWidth(), myMap.cellHeight());
+		}
+    }
+    
+	private void addCanvas() {
+		Canvas canvas = new Canvas(myMap.width(), myMap.height());
+        gc = canvas.getGraphicsContext2D();
+        root.getChildren().add(canvas);
+	}
+    
+	private void addSelectionCanvas() {
+		Canvas selectionLayer = new Canvas(myMap.width(), myMap.height());
+		selectionGC = selectionLayer.getGraphicsContext2D();
+		root.getChildren().add(selectionLayer);
+	}
     
     private GameMap readMapFromFile(String mapFileName) {
 		List<String> lines = new ArrayList<String>();
     	try {
-    		String line;
     		Scanner sc = new Scanner(new BufferedReader(new FileReader(mapFileName)));
             while(sc.hasNextLine()) {
             	lines.add(sc.nextLine());
             }         
     	}
     	catch(FileNotFoundException ex) { ex.printStackTrace(); }
-    	catch(IOException ex) { ex.printStackTrace(); }
     	int numCols = lines.get(0).length();
     	int numRows = lines.size();
     	mapGrid = new MapElement[numCols][numRows];

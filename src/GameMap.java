@@ -1,5 +1,6 @@
 import javafx.scene.*;
 import javafx.scene.canvas.*;
+import javafx.scene.effect.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -33,6 +34,7 @@ public class GameMap {
 		this.numRows = numRows;
 		cellWidth = (double)width/numCols;
 		cellHeight = (double)height/numRows;
+		
 	}
 	
 	public void drawMap(GraphicsContext gc, List<MapElement> mapElements, Group root) {
@@ -42,12 +44,12 @@ public class GameMap {
 	}
 
 	// Make a solid color background
-	public void makeBackground(GraphicsContext gc) {
+	private void makeBackground(GraphicsContext gc) {
 		gc.setFill( new Color(1.0, 0.4, 0.31, 1) );
         gc.fillRect(0,0, width, height);
 	}
 
-	public void drawGridLines(GraphicsContext gc) {
+	private void drawGridLines(GraphicsContext gc) {
 		gc.setLineWidth(1.25);
 		// Draw vertical lines
 		for (double i = 0; i <= width; i += cellWidth) {
@@ -94,6 +96,7 @@ public class GameMap {
 		parent.getChildren().add(image);
 	}
 	
+
 	
 	// Getter Methods
 	public int width() { return width; }

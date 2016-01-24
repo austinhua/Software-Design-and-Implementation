@@ -4,7 +4,7 @@ import java.lang.Math;
 
 public class Unit extends MapElement{
 	public final static int DEFAULT_HEALTH = 100;
-	public final static int DEFAULT_SPEED = 2; // Number of moves that can be taken each step
+	public final static int DEFAULT_SPEED = 1; // Number of moves that can be taken each step, can be <1 to take 1 move every 2+ steps
 	public final static int DEFAULT_DAMAGE = 20;
 	public final static int DEFAULT_RANGE = 1;
 	
@@ -15,6 +15,7 @@ public class Unit extends MapElement{
 	private Point destination;
 	private boolean friendly;
 	private boolean selected;
+	private int curAvailableMoves;
 	
 	public Unit(int x, int y, MapElement[][] mapGrid, boolean friend) {
 		super(x, y, mapGrid);
@@ -31,6 +32,7 @@ public class Unit extends MapElement{
 							(int)(Math.random() * mapGrid[0].length * .5)); 
 		}
 		selected = false;
+		curAvailableMoves = 0;
 	}
 	
 	// Getter Methods
@@ -46,7 +48,9 @@ public class Unit extends MapElement{
 	
 	@Override
 	public void takeAction() {
-		for (int i = 0; i < speed; i++) {
+		curAvailableMoves += speed;
+		while(curAvailableMoves >= 1) {
+			curAvailableMoves--;
 			List<Unit> attackableEnemies = findNearbyEnemies(range);
 			if (!attackableEnemies.isEmpty()) {
 				attackEnemy(attackableEnemies);

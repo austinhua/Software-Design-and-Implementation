@@ -17,7 +17,7 @@ public class Main extends Application {
     public static final String DEFAULT_MAP = "defaultmap.cellcraft";
     public static final String SPLASH_SCREEN = "SplashScreen.jpg";
    	    
-    public static final double SECONDS_PER_FRAME = 3;
+    public static final double SECONDS_PER_FRAME = 2;
     private static final double MILLISECOND_DELAY = 1000 * SECONDS_PER_FRAME;
     private static final double SECOND_DELAY = SECONDS_PER_FRAME;
 
