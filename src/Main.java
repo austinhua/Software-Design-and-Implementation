@@ -30,10 +30,15 @@ public class Main extends Application {
      */
     @Override
     public void start (Stage s) {
+        // create your own game here
         myGame = new CellCraft();
         s.setTitle(myGame.getTitle());
+        mapFileName = DEFAULT_MAP;
+
         // attach game to the stage and display it
-        Scene scene = myGame.init(DEFAULT_MAP);
+        Scene scene = myGame.init(mapFileName);
+        s.setScene(scene);
+        s.show();
 
         startLoop();
     }

@@ -19,6 +19,7 @@ Main.java
 Data (non Java) files needed:
 HumanTCell.png
 PurpleHumanTCell.png
+SplashScreen.jpg
 defaultmap.cellcraft
 
 How to play the game:
@@ -26,7 +27,7 @@ To select friendly units (blue), either click on the unit, or click and drag ove
 To deselect units, press the escape key.
 The aim of the game is to destroy all the enemy units.
 When opposing units come into attacking range they will automatically stop and attack each other until only one remains.
-
+The file defaultmap.cellcraft can be edited to change the starting configuration of the Map. The letter 'O' represents empty space, the letter 'A' represents a friendly Unit, and the letter 'Z' represents an enemy Unit.
 
 Keys/Mouse input:
 Mouse click - select a single unit / direct selected units to a location
@@ -37,8 +38,10 @@ Cheat Keys:
 I - All your friendly units are invincible and won't take damage
 
 Known bugs:
-The splash screen is not showing up properly at the beginning so I commented out the code for it
-The SECONDS_PER_FRAME parameter can't be decreased beyond a certain point, depending on the map complexity, or there won't be enough time to process actions before the next step() is called.
+
+The splash screen is not showing up properly at the beginning so I commented out the code for it.
+
+The SECONDS\_PER\_FRAME parameter can't be decreased beyond a certain point, depending on the map complexity, or there won't be enough time to process actions before the next step() is called.
 
 Extra features:
 The design of the classes allows for a lot of flexibility in extending the MapElement class and its subclass Unit to allow you to design more interesting MapElements as well as Units that have different attributes, including health, speed, damage, and range, and also different behaviors through polymorphism, such as movement and attacking behavior. 

@@ -201,6 +201,9 @@ class CellCraft {
                 case 'Z':
                 	addToGame(new Unit(i, j, mapGrid, false)); // Default enemy Unit
                     break;
+//                case 'X':
+//                	addToGame(new MapElement(i, j, mapGrid));
+//                	break;
                 default:
                     // do nothing
     			}
