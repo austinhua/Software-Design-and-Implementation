@@ -81,10 +81,10 @@ class CellCraft {
     }
 
     // Return true if successfully added, false otherwise (ex: already a unit at that position)
-	private boolean addToGame(Unit u) {
-		if (checkBounds(u.position()) && (mapGrid[u.x()][u.y()] == null || mapGrid[u.x()][u.y()].isFree())) {
-			mapGrid[u.x()][u.y()] = u;
-			mapElements.add(u);
+	private boolean addToGame(MapElement m) {
+		if (checkBounds(m.position()) && (mapGrid[m.x()][m.y()] == null || mapGrid[m.x()][m.y()].isFree())) {
+			mapGrid[m.x()][m.y()] = m;
+			mapElements.add(m);
 			return true;
 		}
 		return false;
@@ -201,9 +201,9 @@ class CellCraft {
                 case 'Z':
                 	addToGame(new Unit(i, j, mapGrid, false)); // Default enemy Unit
                     break;
-//                case 'X':
-//                	addToGame(new MapElement(i, j, mapGrid));
-//                	break;
+                case 'X':
+                	addToGame(new MapElement(i, j, mapGrid)); // Obstacle
+                	break;
                 default:
                     // do nothing
     			}

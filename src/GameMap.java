@@ -73,6 +73,11 @@ public class GameMap {
 					placeImageAtCell(m, DEFAULT_ENEMY_IMAGE, mapElementsGroup);
 				}
 			}
+			else {
+				Rectangle solidBlock = new Rectangle((m.x()) * cellWidth, (m.y()) * cellHeight, cellWidth, cellHeight);
+				solidBlock.setFill(new Color(.4, 1.0, .7, 1.0));
+				mapElementsGroup.getChildren().add(solidBlock);
+			}
 		}
 	}
 	
