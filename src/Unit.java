@@ -1,5 +1,6 @@
 import java.awt.Point;
 import java.util.*;
+import java.lang.Math;
 
 public class Unit extends MapElement{
 	public final static int DEFAULT_HEALTH = 100;
@@ -21,8 +22,14 @@ public class Unit extends MapElement{
 		speed = DEFAULT_SPEED;
 		damage = DEFAULT_DAMAGE;
 		range = DEFAULT_RANGE;
-		destination = this.position();
 		this.friendly = friend;
+		if (friendly) {
+			destination = this.position();
+		}
+		else { // give enemy units a random destination on the left half of the map
+			destination = new Point((int)(Math.random() * mapGrid.length * .5), 
+							(int)(Math.random() * mapGrid[0].length * .5)); 
+		}
 		selected = false;
 	}
 	
@@ -43,7 +50,6 @@ public class Unit extends MapElement{
 			List<Unit> attackableEnemies = findNearbyEnemies(range);
 			if (!attackableEnemies.isEmpty()) {
 				attackEnemy(attackableEnemies);
-				//System.out.println("attacking");
 				return;
 			}
 			else {

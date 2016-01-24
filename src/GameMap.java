@@ -85,7 +85,7 @@ public class GameMap {
 		ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imageName)));
 		if (m instanceof Unit) {
 			Unit u = (Unit)m;
-			image.setOpacity(u.getHealth()/100. > .4? u.getHealth()/100. : .4);
+			image.setOpacity(u.getHealth()/100. > .5? u.getHealth()/100. : .5);
 		}
 		image.setFitHeight(cellHeight*1.25);
 		image.setFitWidth(cellWidth*1.25);
