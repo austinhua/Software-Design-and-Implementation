@@ -33,12 +33,6 @@ public class Unit extends MapElement{
 	public boolean isFriendly() { return friendly; }
 	public boolean isSelected() { return selected; }
 	
-	/** Adds change to current health. If a unit it taking damage, change should be negative. Returns unit's new health. */
-	public int changeHealth(int change) {
-		health += change;
-		return health;
-	}
-	
 	public void setDestination(Point dest) {
 		destination = dest;
 	}
@@ -48,7 +42,8 @@ public class Unit extends MapElement{
 		for (int i = 0; i < speed; i++) {
 			List<Unit> attackableEnemies = findNearbyEnemies(range);
 			if (!attackableEnemies.isEmpty()) {
-				//attackEnemy(attackableEnemies);
+				attackEnemy(attackableEnemies);
+				//System.out.println("attacking");
 				return;
 			}
 			else {
@@ -59,7 +54,7 @@ public class Unit extends MapElement{
 	
 	/** Attempts to move one "movement point" towards the destination point. 
 	 *  Cannot move if there is a nearby enemy it can attack.
-	 *  Returns a boolean indicating if it moved or not.
+	 *  Returns a boolean indicating whether it moved or not.
 	 */
 	private boolean move() {
 		int dx = destination.x - x();
@@ -125,15 +120,30 @@ public class Unit extends MapElement{
 		List<Unit> nearbyEnemies = new ArrayList<Unit>();
 		for (int i = x() - rangeToCheck; i <= x() + rangeToCheck; i++) {
 			for (int j = y() - rangeToCheck; j <= y() + rangeToCheck; j++) {
-				if (i >= 0 && i < myGrid.length && j >= 0 && j >= myGrid[0].length) {
+				if (i >= 0 && i < myGrid.length && j >= 0 && j < myGrid[0].length) {
 					MapElement e = myGrid[i][j];
-					if (e != null && e instanceof Unit && !((Unit)e).isFriendly() && !((Unit)e).isDead()) {
+					if (e != null && e instanceof Unit && (((Unit)e).isFriendly() != this.friendly) && !((Unit)e).isDead()) {
 						nearbyEnemies.add((Unit)e);
 					}
 				}
 			}
 		}
 		return nearbyEnemies;
+	}
+	
+	public void attackEnemy(List<Unit> attackableEnemies) {
+		Unit enemy = attackableEnemies.get(0);
+		enemy.changeHealth(-damage);
+	}
+	
+	/** Adds change to current health. 
+	 * If a unit it taking damage, change should be negative. 
+	 * Returns unit's new health. */
+	public int changeHealth(int change) {
+		if (CellCraft.invincibility && friendly) return health;
+		health += change;
+		//System.out.println("New Health: " + health);
+		return health;
 	}
 	
 	public boolean isDead() {

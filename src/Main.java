@@ -14,14 +14,15 @@ import javafx.util.Duration;
 public class Main extends Application {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 600;
-    public static final int NUMCOLS = 50;
-    public static final int NUMROWS = 30;
+    public static final String DEFAULT_MAP = "defaultmap.cellcraft";
+    public static final String SPLASH_SCREEN = "SplashScreen.jpg";
    	    
-    public static final double SECONDS_PER_FRAME = 1.5;
+    public static final double SECONDS_PER_FRAME = 3;
     private static final double MILLISECOND_DELAY = 1000 * SECONDS_PER_FRAME;
     private static final double SECOND_DELAY = SECONDS_PER_FRAME;
 
     private CellCraft myGame;
+    private String mapFileName;
     
 
     /**
@@ -29,14 +30,10 @@ public class Main extends Application {
      */
     @Override
     public void start (Stage s) {
-        // create your own game here
         myGame = new CellCraft();
         s.setTitle(myGame.getTitle());
-
         // attach game to the stage and display it
-        Scene scene = myGame.init(new GameMap(WIDTH, HEIGHT, NUMCOLS, NUMROWS));
-        s.setScene(scene);
-        s.show();
+        Scene scene = myGame.init(DEFAULT_MAP);
 
         startLoop();
     }
@@ -50,7 +47,7 @@ public class Main extends Application {
         animation.getKeyFrames().add(frame);
         animation.play();
 	}
-    
+	
 
     /**
      * Start the program.

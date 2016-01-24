@@ -28,5 +28,9 @@ public class MapElement {
 		return false;
 	}
 	
+	public boolean isDead() {
+		return false;
+	}
+	
 	public void takeAction() { }
 }

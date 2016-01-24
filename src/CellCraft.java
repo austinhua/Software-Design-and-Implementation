@@ -1,6 +1,7 @@
 import java.util.*;
 import java.awt.Point;
 import java.lang.Math;
+import java.io.*;
 
 import javafx.scene.*;
 import javafx.scene.canvas.*;
@@ -20,14 +21,17 @@ class CellCraft {
     public static final String TITLE = "CellCraft";
     private Scene myScene;
     private Group root;
-    
+    private GraphicsContext gc;    
     private GameMap myMap;
-    private GraphicsContext gc;
+    
     private Point pointPressed;
     private Point pointReleased;
     private List<Unit> curSelected = new ArrayList<Unit>();
     private List<MapElement> mapElements = new ArrayList<MapElement>();
-	private MapElement[][] mapGrid = new MapElement[Main.NUMCOLS][Main.NUMROWS]; // No modifier for ease of use within package because calls must frequently be made (similar to Java.awt.Point)
+	private MapElement[][] mapGrid; // No modifier for ease of use within package because calls must frequently be made (similar to Java.awt.Point)
+	private boolean enterPressed = false;
+	protected static boolean invincibility = false;
+	
 	
     /**
      * Returns name of the game.
@@ -39,40 +43,45 @@ class CellCraft {
     /**
      * Create the game's scene
      */
-    public Scene init (GameMap map) {
-    	myMap = map;
-    	addToMap(new Unit(23, 23, mapGrid, true));
+    public Scene init (String mapFileName) {
+    	myMap = readMapFromFile(mapFileName);
         // Create a scene graph to organize the scene
         root = new Group();
         // Create a place to see the shapes
-        myScene = new Scene(root, map.width(), map.height(), Color.GREY);
+        myScene = new Scene(root, myMap.width(), myMap.height(), Color.GREY);
+        // root.getChildren().add(new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(splashScreen))));
+        // while(!enterPressed) {}
         // Add canvas object
-        Canvas canvas = new Canvas(map.width(), map.height());
+        Canvas canvas = new Canvas(myMap.width(), myMap.height());
         gc = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
         // draw the map
-        map.drawMap(gc, mapElements, root);
-        
-//        // Make some shapes and set their properties
-//        Image image = new Image(getClass().getClassLoader().getResourceAsStream("duke.gif"));
-//        myBouncer = new ImageView(image);
-//        
-//        // x and y represent the top left corner, so center it
-//        myBouncer.setX(map.width() / 2 - myBouncer.getBoundsInLocal().getWidth() / 2);
-//        myBouncer.setY(map.height() / 2  - myBouncer.getBoundsInLocal().getHeight() / 2);
-//        myTopBlock = new Rectangle(map.width() / 2 - 25, map.height() / 2 - 100, 50, 50);
-//        myTopBlock.setFill(Color.RED);
-//        // order added to the group is the order in which they are drawn
-//        root.getChildren().add(myBouncer);
-
-        
+        myMap.drawMap(gc, mapElements, root); 
         setUpInputResponses(myScene);
         
         return myScene;
     }
+    
+    public void step (double elapsedTime) {
+    	Iterator<MapElement> it = mapElements.iterator();
+    	while (it.hasNext()) {
+    		MapElement m = it.next();
+    		if(m.isDead()) {
+    			if (mapGrid[m.x()][m.y()].equals(m)) {
+    				mapGrid[m.x()][m.y()] = null;
+    				it.remove();
+    			}
+    		}
+    		else {
+    			m.takeAction();
+    		}
+    	}
+    	myMap.drawMapElements(gc, mapElements, root);
+    
+    }
 
     // Return true if successfully added, false otherwise (ex: already a unit at that position)
-	private boolean addToMap(Unit u) {
+	private boolean addToGame(Unit u) {
 		if (checkBounds(u.position()) && (mapGrid[u.x()][u.y()] == null || mapGrid[u.x()][u.y()].isFree())) {
 			mapGrid[u.x()][u.y()] = u;
 			mapElements.add(u);
@@ -81,14 +90,9 @@ class CellCraft {
 		return false;
 	}
 	
-	private boolean removeFromMap(Unit u) {
-		if (mapGrid[u.x()][u.y()].equals(u)) {
-			mapElements.remove(u);
-			mapGrid[u.x()][u.y()] = null;
-			return true;
-		}
-		return false;
-	}
+    public boolean checkBounds(Point p) {
+    	return (p.x > 0 && p.y > 0 && p.x < mapGrid.length && p.y < mapGrid[0].length);
+    }
     
     public void setUpInputResponses(Scene myScene) {
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
@@ -96,39 +100,18 @@ class CellCraft {
         myScene.setOnMouseReleased(e -> handleMouseReleased(e.getX(), e.getY()));
     }
 
-    public void step (double elapsedTime) {
-    	System.out.println("step");
-//        // update attributes
-//        myTopBlock.setRotate(myBottomBlock.getRotate() - 1);
-//        
-//        // check for collisions
-//        if (intersect.getBoundsInLocal().getWidth() != -1) {
-//            myTopBlock.setFill(Color.MAROON);
-//        }
-    	for (MapElement m : mapElements) {
-    		m.takeAction();
-    	}
-    	myMap.drawMapElements(gc, mapElements, root);
-    
-    }
-
-
     private void handleKeyInput (KeyCode code) {
         switch (code) {
-//            case RIGHT:
-//                myTopBlock.setX(myTopBlock.getX() + KEY_INPUT_SPEED);
-//                break;
-//            case LEFT:
-//                myTopBlock.setX(myTopBlock.getX() - KEY_INPUT_SPEED);
-//                break;
-//            case UP:
-//                myTopBlock.setY(myTopBlock.getY() - KEY_INPUT_SPEED);
-//                break;
-//            case DOWN:
-//                myTopBlock.setY(myTopBlock.getY() + KEY_INPUT_SPEED);
-//                break;
             case ESCAPE:
             	deselectAll();
+            	break;
+            case I:
+            	if (invincibility) System.out.println("Invincibility toggled off");
+            	else System.out.println("Invincibility toggled on");
+            	invincibility = !invincibility;
+            	break;
+            case ENTER:
+            	enterPressed = true;
             	break;
             default:
                 // do nothing
@@ -137,22 +120,16 @@ class CellCraft {
 
     private void handleMousePressed (double x, double y) {
     	pointPressed = getCell(x, y);
-    	System.out.println("Pressed: (" + x + ", " + y + ")");
     }
     
     private void handleMouseReleased (double x, double y) {
     	pointReleased = getCell(x, y);
-    	System.out.println("Released: (" + x + ", " + y + ")");
     	if (curSelected.isEmpty()) {
     		findFriendlyUnitsInRange(pointPressed, pointReleased);
     	}
     	else { // Whichever grid cell the mouse is released on is the one chosen as the destination
     		setDestinationForSelected(pointReleased);
     	}
-    }
-    
-    private boolean checkBounds(Point p) {
-    	return (p.x > 0 && p.y > 0 && p.x < myMap.numCols() && p.y < myMap.numRows());
     }
     
     // Converts screen coordinates to cell coordinates
@@ -197,5 +174,38 @@ class CellCraft {
     		u.deselect();
     	}
     	curSelected.clear();
+    }
+    
+    private GameMap readMapFromFile(String mapFileName) {
+		List<String> lines = new ArrayList<String>();
+    	try {
+    		String line;
+    		Scanner sc = new Scanner(new BufferedReader(new FileReader(mapFileName)));
+            while(sc.hasNextLine()) {
+            	lines.add(sc.nextLine());
+            }         
+    	}
+    	catch(FileNotFoundException ex) { ex.printStackTrace(); }
+    	catch(IOException ex) { ex.printStackTrace(); }
+    	int numCols = lines.get(0).length();
+    	int numRows = lines.size();
+    	mapGrid = new MapElement[numCols][numRows];
+    	for (int j = 0; j < numRows; j++) {
+    		char[] row = lines.get(j).toUpperCase().toCharArray();
+    		for (int i = 0; i < row.length; i++) {
+    			char c = row[i];
+    			switch (c) {
+                case 'A':
+    				addToGame(new Unit(i, j, mapGrid, true)); // Default friendly Unit
+                    break;
+                case 'Z':
+                	addToGame(new Unit(i, j, mapGrid, false)); // Default enemy Unit
+                    break;
+                default:
+                    // do nothing
+    			}
+    		}
+    	}
+    	return new GameMap(Main.WIDTH, Main.HEIGHT, numCols, numRows);
     }
 }

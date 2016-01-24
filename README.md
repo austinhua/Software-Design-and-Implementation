@@ -1,28 +1,47 @@
 # game
 First project for CompSci 308 Spring 2016
 
-Name:
+Name: Austin Hua
 
-Date started:
+Date started: 1/17/16
 
-Date finished:
+Date finished: 1/24/16
 
-Hours worked:
+Hours worked: 20
 
-Resources used:
+Resources used: 
+ - http://gamedevelopment.tutsplus.com/tutorials/introduction-to-javafx-for-game-development
+ - StackOverflow
 
-Main class file:
+Main class file: 
+Main.java
 
 Data (non Java) files needed:
+HumanTCell.png
+PurpleHumanTCell.png
+defaultmap.cellcraft
 
 How to play the game:
+To select friendly units (blue), either click on the unit, or click and drag over a group of units.
+To deselect units, press the escape key.
+The aim of the game is to destroy all the enemy units.
+When opposing units come into attacking range they will automatically stop and attack each other until only one remains.
+
 
 Keys/Mouse input:
+Mouse click - select a single unit / direct selected units to a location
+Mouse drag - select a group of units
+Escape - deselect all currently selected units
 
 Cheat Keys:
+I - All your friendly units are invincible and won't take damage
 
 Known bugs:
+The splash screen is not showing up properly at the beginning so I commented out the code for it
+The SECONDS_PER_FRAME parameter can't be decreased beyond a certain point, depending on the map complexity, or there won't be enough time to process actions before the next step() is called.
 
 Extra features:
+The design of the classes allows for a lot of flexibility in extending the MapElement class and its subclass Unit to allow you to design more interesting MapElements as well as Units that have different attributes, including health, speed, damage, and range, and also different behaviors through polymorphism, such as movement and attacking behavior. 
 
 Impressions/Suggestions:
+This was an interesting project which was a good introduction to using JavaFX.

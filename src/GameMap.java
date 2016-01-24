@@ -23,7 +23,8 @@ public class GameMap {
 	private double cellHeight;
 	private Group mapElementsGroup;
 	
-	private String DEFAULT_FRIENDLY_IMAGE = "HumanTCell.jpg";
+	private String DEFAULT_FRIENDLY_IMAGE = "HumanTCell.png";
+	private String DEFAULT_ENEMY_IMAGE = "PurpleHumanTCell.png";
 	
 	public GameMap(int width, int height, int numCols, int numRows) {
 		this.width = width;
@@ -66,20 +67,26 @@ public class GameMap {
 			// More specific ones should go first
 			if (m instanceof Unit) {
 				if (((Unit) m).isFriendly()) {
-					placeImageAtCell(m.x(), m.y(), DEFAULT_FRIENDLY_IMAGE, mapElementsGroup);
+					placeImageAtCell(m, DEFAULT_FRIENDLY_IMAGE, mapElementsGroup);
+				}
+				else {
+					placeImageAtCell(m, DEFAULT_ENEMY_IMAGE, mapElementsGroup);
 				}
 			}
 		}
 	}
 	
-	public void placeImageAtCell(int x, int y, String imageName, Group parent) {
-		Image image = new Image(getClass().getClassLoader().getResourceAsStream(imageName));
-		ImageView unit = new ImageView(image);
-		unit.setFitHeight(cellHeight);
-		unit.setFitWidth(cellWidth);
-		unit.setX(x*cellWidth);
-		unit.setY(y*cellHeight);
-		parent.getChildren().add(unit);
+	public void placeImageAtCell(MapElement m, String imageName, Group parent) {
+		ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imageName)));
+		if (m instanceof Unit) {
+			Unit u = (Unit)m;
+			image.setOpacity(u.getHealth()/100. > .4? u.getHealth()/100. : .4);
+		}
+		image.setFitHeight(cellHeight*1.25);
+		image.setFitWidth(cellWidth*1.25);
+		image.setX(m.x()*cellWidth - .125*cellWidth);
+		image.setY(m.y()*cellHeight - .125*cellHeight);
+		parent.getChildren().add(image);
 	}
 	
 	
