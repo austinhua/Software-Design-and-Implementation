@@ -6,8 +6,14 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 
+import java.util.*;
 
-// Handles the graphics 
+
+/** Handles drawing graphics.
+ * 
+ * @author Austin Hua
+ *
+ */
 public class GameMap {
 	private int width;
 	private int height;
@@ -15,6 +21,9 @@ public class GameMap {
 	private int numRows;
 	private double cellWidth;
 	private double cellHeight;
+	private Group mapElementsGroup;
+	
+	private String DEFAULT_FRIENDLY_IMAGE = "HumanTCell.jpg";
 	
 	public GameMap(int width, int height, int numCols, int numRows) {
 		this.width = width;
@@ -25,14 +34,15 @@ public class GameMap {
 		cellHeight = (double)height/numRows;
 	}
 	
-	public void drawMap(GraphicsContext gc) {
+	public void drawMap(GraphicsContext gc, List<MapElement> mapElements, Group root) {
         makeBackground(gc);
         drawGridLines(gc);
+        drawMapElements(gc, mapElements, root);
 	}
 
 	// Make a solid color background
 	public void makeBackground(GraphicsContext gc) {
-		gc.setFill( new Color(1.0, 0.4, 0.31, .85) );
+		gc.setFill( new Color(1.0, 0.4, 0.31, 1) );
         gc.fillRect(0,0, width, height);
 	}
 
@@ -48,6 +58,32 @@ public class GameMap {
 		}
 	}
 	
+	public void drawMapElements(GraphicsContext gc, List<MapElement> mapElements, Group root) {
+		root.getChildren().remove(mapElementsGroup);
+		mapElementsGroup = new Group();
+		root.getChildren().add(mapElementsGroup);
+		for (MapElement m : mapElements) {
+			// More specific ones should go first
+			if (m instanceof Unit) {
+				if (((Unit) m).isFriendly()) {
+					placeImageAtCell(m.x(), m.y(), DEFAULT_FRIENDLY_IMAGE, mapElementsGroup);
+				}
+			}
+		}
+	}
+	
+	public void placeImageAtCell(int x, int y, String imageName, Group parent) {
+		Image image = new Image(getClass().getClassLoader().getResourceAsStream(imageName));
+		ImageView unit = new ImageView(image);
+		unit.setFitHeight(cellHeight);
+		unit.setFitWidth(cellWidth);
+		unit.setX(x*cellWidth);
+		unit.setY(y*cellHeight);
+		parent.getChildren().add(unit);
+	}
+	
+	
+	// Getter Methods
 	public int width() { return width; }
 	public int height() { return height; }
 	public int numCols() { return numCols; }

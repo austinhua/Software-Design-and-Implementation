@@ -7,8 +7,7 @@ import javafx.util.Duration;
 
 
 /**
- * This is the main program, it is basically boilerplate to create
- * an animated scene.
+ * Main program, containing mostly boilerplate code.
  * 
  * @author Austin Hua
  */
@@ -18,9 +17,9 @@ public class Main extends Application {
     public static final int NUMCOLS = 50;
     public static final int NUMROWS = 30;
    	    
-    public static final int FRAMES_PER_SECOND = 60;
-    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    public static final double SECONDS_PER_FRAME = 1.5;
+    private static final double MILLISECOND_DELAY = 1000 * SECONDS_PER_FRAME;
+    private static final double SECOND_DELAY = SECONDS_PER_FRAME;
 
     private CellCraft myGame;
     
@@ -39,14 +38,19 @@ public class Main extends Application {
         s.setScene(scene);
         s.show();
 
-        // sets the game's loop
-        KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
+        startLoop();
+    }
+
+
+	private void startLoop() {
+		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY),
                                       e -> myGame.step(SECOND_DELAY));
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
-    }
+	}
+    
 
     /**
      * Start the program.
