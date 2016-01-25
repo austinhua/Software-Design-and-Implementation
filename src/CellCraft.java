@@ -113,11 +113,12 @@ class CellCraft {
 			mapElements.add(m);
 			return true;
 		}
+		System.out.printf(m.getClass().toString() + " failed %s" , "a");
 		return false;
 	}
 	
     public boolean checkBounds(Point p) {
-    	return (p.x > 0 && p.y > 0 && p.x < mapGrid.length && p.y < mapGrid[0].length);
+    	return (p.x >= 0 && p.y >= 0 && p.x < mapGrid.length && p.y < mapGrid[0].length);
     }
     
     public void setUpInputResponses(Scene myScene) {
@@ -249,9 +250,16 @@ class CellCraft {
                 case 'Z':
                 	addToGame(new Unit(i, j, mapGrid, false, this)); // Default enemy Unit
                     break;
+                case 'N':
+                	addToGame(new Nanorobot(i, j, mapGrid, true, this)); // Friendly Nanorobot
+                	break;
+                case 'M':
+                	addToGame(new Nanorobot(i, j, mapGrid, false, this)); // Enemy Nanorobot
+                	break;
                 case 'X':
                 	addToGame(new MapElement(i, j, mapGrid, this)); // Obstacle
                 	break;
+
                 default:
                     // do nothing
     			}

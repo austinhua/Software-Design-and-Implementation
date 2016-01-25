@@ -4,18 +4,19 @@ import java.lang.Math;
 
 public class Unit extends MapElement{
 	public final static int DEFAULT_HEALTH = 100;
-	public final static int DEFAULT_SPEED = 1; // Number of moves that can be taken each step, can be <1 to take 1 move every 2+ steps
+	public final static double DEFAULT_SPEED = 1; // Number of moves that can be taken each step, can be <1 to take 1 move every 2+ steps
 	public final static int DEFAULT_DAMAGE = 20;
 	public final static int DEFAULT_RANGE = 1;
 	
-	private int health;
-	private int speed;
-	private int damage;
-	private int range;
-	private Point destination;
-	private boolean friendly;
-	private boolean selected;
-	private int curAvailableMoves;
+	protected int health;
+	protected double speed;
+	protected int damage;
+	protected int range;
+	protected Point destination;
+	protected boolean friendly;
+	protected boolean selected;
+	protected double curAvailableMoves;
+	protected String imageFile;
 	
 	public Unit(int x, int y, MapElement[][] mapGrid, boolean friend, CellCraft game) {
 		super(x, y, mapGrid, game);
@@ -26,10 +27,13 @@ public class Unit extends MapElement{
 		this.friendly = friend;
 		if (friendly) {
 			destination = this.position();
+			imageFile = Main.DEFAULT_FRIENDLY_IMAGE;
+
 		}
 		else { // give enemy units a random destination on the left half of the map
 			destination = new Point((int)(Math.random() * mapGrid.length * .5), 
 							(int)(Math.random() * mapGrid[0].length * .5)); 
+			imageFile = Main.DEFAULT_ENEMY_IMAGE;
 		}
 		selected = false;
 		curAvailableMoves = 0;
@@ -37,10 +41,11 @@ public class Unit extends MapElement{
 	
 	// Getter Methods
 	public int getHealth() { return health; }
-	public int getSpeed() { return speed; }
+	public double getSpeed() { return speed; }
 	public int getDamage() { return damage; }
 	public boolean isFriendly() { return friendly; }
 	public boolean isSelected() { return selected; }
+	public String getImageFile() { return imageFile; }
 	
 	public void setDestination(Point dest) {
 		destination = dest;

@@ -16,6 +16,9 @@ public class Main extends Application {
     public static final int HEIGHT = 600;
     public static final String DEFAULT_MAP = "defaultmap.cellcraft";
     public static final String SPLASH_SCREEN = "SplashScreen.jpg";
+	public static final String DEFAULT_FRIENDLY_IMAGE = "HumanTCell.png";
+	public static final String DEFAULT_ENEMY_IMAGE = "PurpleHumanTCell.png";
+	public static final String NANOROBOT_IMAGE = "Nanorobot.png";
    	    
     public static final double SECONDS_PER_FRAME = 2;
     private static final double MILLISECOND_DELAY = 1000 * SECONDS_PER_FRAME;
