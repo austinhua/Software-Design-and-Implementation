@@ -8,11 +8,13 @@ import java.awt.Point;
 
 public class MapElement {
 	private Point position;
-	MapElement[][] myGrid;
+	protected CellCraft myGame;
+	protected MapElement[][] myGrid;
 	
-	public MapElement(int x, int y, MapElement[][] mapGrid) {
+	public MapElement(int x, int y, MapElement[][] mapGrid, CellCraft game) {
 		position = new Point(x, y);
 		myGrid = mapGrid;
+		myGame = game;
 	}
 	
 	public Point position() { return position; }

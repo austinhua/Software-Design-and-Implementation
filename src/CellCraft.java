@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
+import javafx.scene.text.*;
 
 
 /**
@@ -21,7 +21,7 @@ import javafx.scene.shape.*;
 class CellCraft {
     public static final String TITLE = "CellCraft";
     private Scene myScene;
-    private Group root;
+    private Group root = new Group();
     private GraphicsContext gc;
 	private GraphicsContext selectionGC;
     private GameMap myMap;
@@ -30,9 +30,9 @@ class CellCraft {
     private Point pointReleased;
     private List<Unit> curSelected = new ArrayList<Unit>();
     private List<MapElement> mapElements = new ArrayList<MapElement>();
-	private MapElement[][] mapGrid; // No modifier for ease of use within package because calls must frequently be made (similar to Java.awt.Point)
+	private MapElement[][] mapGrid; 
 	private boolean enterPressed = false;
-	protected static boolean invincibility = false;
+	private boolean invincibility = false;
 	
 	
     /**
@@ -47,22 +47,46 @@ class CellCraft {
      */
     public Scene init (String mapFileName) {
     	myMap = readMapFromFile(mapFileName);
-        // Create a scene graph to organize the scene
-        root = new Group();
-        // Create a place to see the shapes
         myScene = new Scene(root, myMap.width(), myMap.height(), Color.GREY);
-        // root.getChildren().add(new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(splashScreen))));
-        // while(!enterPressed) {}
-        addCanvas();
-        addSelectionCanvas();
+        gc = makeNewCanvas();
+        selectionGC = makeNewCanvas();
         // draw the map
-        myMap.drawMap(gc, mapElements, root); 
+        myMap.drawMap(gc);
+    	myMap.drawMapElements(mapElements, root);
         setUpInputResponses(myScene);
-        
         return myScene;
     }
     
-    public void step (double elapsedTime) {
+    /**
+     * 
+     */
+    public Scene setUpSplashScreen(String imageName) {
+    	Group startup = new Group();
+    	Scene splashScreenScene = new Scene(startup, Main.WIDTH, Main.HEIGHT, Color.WHITE);
+    	addStartupImage(imageName, startup);
+		GraphicsContext ssGC = makeNewCanvas();
+		//writeStartupText(ssGC);
+		return splashScreenScene;
+    }
+
+	private void addStartupImage(String imageName, Group startup) {
+		ImageView image = new ImageView(new Image(getClass().getClassLoader().getResourceAsStream(imageName)));
+    	image.setFitHeight(Main.HEIGHT);
+		image.setFitWidth(Main.WIDTH);
+		startup.getChildren().add(image);
+	}
+	
+//	private void writeStartupText(GraphicsContext gc) {
+//		gc.setFill( Color.RED );
+//	    gc.setStroke( Color.BLACK );
+//	    gc.setLineWidth(2);
+//	    Font theFont = Font.font( "Times New Roman", FontWeight.BOLD, 48 );
+//	    gc.setFont( theFont );
+//	    gc.fillText( "Hello, World!", 60, 50 );
+//	    gc.strokeText( "Hello, World!", 60, 50 );
+//	}
+
+	public void step (double elapsedTime) {
     	Iterator<MapElement> it = mapElements.iterator();
     	while (it.hasNext()) {
     		MapElement m = it.next();
@@ -76,7 +100,7 @@ class CellCraft {
     			m.takeAction();
     		}
     	}
-    	myMap.drawMapElements(gc, mapElements, root);
+    	myMap.drawMapElements(mapElements, root);
 		selectionGC.clearRect(0, 0, myMap.width(), myMap.height());
 		highlightSelected();
     
@@ -118,6 +142,13 @@ class CellCraft {
             default:
                 // do nothing
         }
+    }
+    
+    public boolean isInvincible() {
+    	return invincibility;
+    }
+    public boolean enterPressed() {
+    	return enterPressed;
     }
 
     private void handleMousePressed (double x, double y) {
@@ -188,16 +219,11 @@ class CellCraft {
 		}
     }
     
-	private void addCanvas() {
-		Canvas canvas = new Canvas(myMap.width(), myMap.height());
-        gc = canvas.getGraphicsContext2D();
+    /** Adds a new canvas of the game's WIDTH AND HEIGHT to root and returns it's corresponding GraphicsContext */
+	private GraphicsContext makeNewCanvas() {
+		Canvas canvas = new Canvas(Main.WIDTH, Main.HEIGHT);
         root.getChildren().add(canvas);
-	}
-    
-	private void addSelectionCanvas() {
-		Canvas selectionLayer = new Canvas(myMap.width(), myMap.height());
-		selectionGC = selectionLayer.getGraphicsContext2D();
-		root.getChildren().add(selectionLayer);
+		return canvas.getGraphicsContext2D();
 	}
     
     private GameMap readMapFromFile(String mapFileName) {
@@ -218,13 +244,13 @@ class CellCraft {
     			char c = row[i];
     			switch (c) {
                 case 'A':
-    				addToGame(new Unit(i, j, mapGrid, true)); // Default friendly Unit
+    				addToGame(new Unit(i, j, mapGrid, true, this)); // Default friendly Unit
                     break;
                 case 'Z':
-                	addToGame(new Unit(i, j, mapGrid, false)); // Default enemy Unit
+                	addToGame(new Unit(i, j, mapGrid, false, this)); // Default enemy Unit
                     break;
                 case 'X':
-                	addToGame(new MapElement(i, j, mapGrid)); // Obstacle
+                	addToGame(new MapElement(i, j, mapGrid, this)); // Obstacle
                 	break;
                 default:
                     // do nothing

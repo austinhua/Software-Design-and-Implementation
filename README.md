@@ -39,8 +39,6 @@ I - All your friendly units are invincible and won't take damage
 
 Known bugs:
 
-The splash screen is not showing up properly at the beginning so I commented out the code for it.
-
 The SECONDS\_PER\_FRAME parameter can't be decreased beyond a certain point, depending on the map complexity, or there won't be enough time to process actions before the next step() is called.
 
 Extra features:

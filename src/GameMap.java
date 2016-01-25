@@ -37,10 +37,9 @@ public class GameMap {
 		
 	}
 	
-	public void drawMap(GraphicsContext gc, List<MapElement> mapElements, Group root) {
+	public void drawMap(GraphicsContext gc) {
         makeBackground(gc);
         drawGridLines(gc);
-        drawMapElements(gc, mapElements, root);
 	}
 
 	// Make a solid color background
@@ -61,7 +60,7 @@ public class GameMap {
 		}
 	}
 	
-	public void drawMapElements(GraphicsContext gc, List<MapElement> mapElements, Group root) {
+	public void drawMapElements(List<MapElement> mapElements, Group root) {
 		root.getChildren().remove(mapElementsGroup);
 		mapElementsGroup = new Group();
 		root.getChildren().add(mapElementsGroup);

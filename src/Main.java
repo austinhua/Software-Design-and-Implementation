@@ -21,9 +21,7 @@ public class Main extends Application {
     private static final double MILLISECOND_DELAY = 1000 * SECONDS_PER_FRAME;
     private static final double SECOND_DELAY = SECONDS_PER_FRAME;
 
-    private CellCraft myGame;
-    private String mapFileName;
-    
+    private CellCraft myGame;    
 
     /**
      * Set things up at the beginning.
@@ -33,14 +31,18 @@ public class Main extends Application {
         // create your own game here
         myGame = new CellCraft();
         s.setTitle(myGame.getTitle());
-        mapFileName = DEFAULT_MAP;
-
-        // attach game to the stage and display it
-        Scene scene = myGame.init(mapFileName);
-        s.setScene(scene);
+        Scene splashScreen = myGame.setUpSplashScreen(SPLASH_SCREEN);
+        s.setScene(splashScreen);
         s.show();
-
-        startLoop();
+        Scene mainGame = myGame.init(DEFAULT_MAP);
+        
+        splashScreen.setOnKeyPressed(e -> startMainGame(s, mainGame));
+    }
+    
+    private void startMainGame(Stage s, Scene mainGame) {
+    	s.setScene(mainGame);
+    	s.show();
+    	startLoop();
     }
 
 

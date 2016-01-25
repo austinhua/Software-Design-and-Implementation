@@ -17,8 +17,8 @@ public class Unit extends MapElement{
 	private boolean selected;
 	private int curAvailableMoves;
 	
-	public Unit(int x, int y, MapElement[][] mapGrid, boolean friend) {
-		super(x, y, mapGrid);
+	public Unit(int x, int y, MapElement[][] mapGrid, boolean friend, CellCraft game) {
+		super(x, y, mapGrid, game);
 		health = DEFAULT_HEALTH;
 		speed = DEFAULT_SPEED;
 		damage = DEFAULT_DAMAGE;
@@ -150,7 +150,7 @@ public class Unit extends MapElement{
 	 * If a unit it taking damage, change should be negative. 
 	 * Returns unit's new health. */
 	public int changeHealth(int change) {
-		if (CellCraft.invincibility && friendly) return health;
+		if (myGame.isInvincible() && friendly) return health;
 		health += change;
 		//System.out.println("New Health: " + health);
 		return health;
