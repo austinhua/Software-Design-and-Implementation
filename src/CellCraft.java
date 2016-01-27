@@ -31,7 +31,6 @@ class CellCraft {
     private List<Unit> curSelected = new ArrayList<Unit>();
     private List<MapElement> mapElements = new ArrayList<MapElement>();
 	private MapElement[][] mapGrid; 
-	private boolean enterPressed = false;
 	private boolean invincibility = false;
 	
 	
@@ -137,9 +136,6 @@ class CellCraft {
             	else System.out.println("Invincibility toggled on");
             	invincibility = !invincibility;
             	break;
-            case ENTER:
-            	enterPressed = true;
-            	break;
             default:
                 // do nothing
         }
@@ -147,9 +143,6 @@ class CellCraft {
     
     public boolean isInvincible() {
     	return invincibility;
-    }
-    public boolean enterPressed() {
-    	return enterPressed;
     }
 
     private void handleMousePressed (double x, double y) {

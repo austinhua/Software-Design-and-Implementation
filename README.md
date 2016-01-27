@@ -19,10 +19,13 @@ Main.java
 Data (non Java) files needed:
 HumanTCell.png
 PurpleHumanTCell.png
+Nanorobot.png
 SplashScreen.jpg
 defaultmap.cellcraft
+obstaclemap.cellcraft
 
 How to play the game:
+At the start screen, '1' selects the beginning/default mode with no obstacles and normal units and '2' selects a map that contains obstacles and gives you a nanorobot (super unit). Enter begins the game.
 To select friendly units (blue), either click on the unit, or click and drag over a group of units.
 To deselect units, press the escape key.
 The aim of the game is to destroy all the enemy units.

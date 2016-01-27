@@ -157,7 +157,6 @@ public class Unit extends MapElement{
 	public int changeHealth(int change) {
 		if (myGame.isInvincible() && friendly) return health;
 		health += change;
-		//System.out.println("New Health: " + health);
 		return health;
 	}
 	
