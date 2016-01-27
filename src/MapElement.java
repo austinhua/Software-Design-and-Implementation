@@ -1,6 +1,7 @@
 import java.awt.Point;
 
-/** Defines a generic element that appears in the game in one of the grids.
+/** 
+ * The purpose of this class is to define a generic element that appears in the game in one of the grids.
  * 
  * @author Austin Hua
  *

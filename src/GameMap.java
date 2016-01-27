@@ -9,14 +9,14 @@ import javafx.scene.shape.*;
 
 import java.util.*;
 
-// Code masterpiece file
-// The purpose of this class was to handle 
 
 
-/** Handles drawing graphics.
+/** 
+ * Code masterpiece file
+ * The purpose of this class was to handle the graphics of the game.
+ * I think this method showed good design because it cleanly separated the graphics from the logic of the game, allowing one to be changed without changing the other.
  * 
  * @author Austin Hua
- *
  */
 public class GameMap {
 	private int width;

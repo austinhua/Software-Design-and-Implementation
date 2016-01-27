@@ -2,6 +2,20 @@ import java.awt.Point;
 import java.util.*;
 import java.lang.Math;
 
+/**
+ * Code masterpiece file
+ * The purpose of this class was to create a generic extension of the MapElements class for combat units. 
+ * I think it is well designed because it allows for a lot of polymorphism in its methods, 
+ * such as takeAction(), findOpenMove(), and findNearbyEnemies(). This allows for different behaviors to be implemented by different extensions of Unit,
+ * still allowing for them all to be called with the same few methods.
+ * I made the attributes of instances of Unit protected because they needed to be frequently added by subclasses. 
+ * I felt that the ease of use of being able to access the multitude of fields directly instead of needing to call a getter/setter method
+ * for each and every one of the fields outweighed the considerations for making the fields private such as preventing 
+ * unintended behavior or for greater encapsulation.
+ * 
+ * @author Austin Hua
+ */
+
 public class Unit extends MapElement{
 	public final static int DEFAULT_HEALTH = 100;
 	public final static double DEFAULT_SPEED = 1; // Number of moves that can be taken each step, can be <1 to take 1 move every 2+ steps
