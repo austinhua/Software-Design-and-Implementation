@@ -87,12 +87,12 @@ public class GameMap {
 			Unit u = (Unit)m;
 			image.setOpacity(u.getHealth()/(double)u.DEFAULT_HEALTH > .5? u.getHealth()/(double)u.DEFAULT_HEALTH : .5);
 		}
-//		if (m instanceof Nanorobot) { //Nanorobot.png needs to be made bigger
-//			image.setFitHeight(cellHeight*2);
-//			image.setFitWidth(cellWidth*2);
-//			image.setX(m.x()*cellWidth - .5*cellWidth);
-//			image.setY(m.y()*cellHeight - .5*cellHeight);
-//		}
+		if (m instanceof Nanorobot) { //Nanorobot.png needs to be made bigger
+			image.setFitHeight(cellHeight*2);
+			image.setFitWidth(cellWidth*2);
+			image.setX(m.x()*cellWidth - .5*cellWidth);
+			image.setY(m.y()*cellHeight - .5*cellHeight);
+		}
 		else {
 			image.setFitHeight(cellHeight*1.25);
 			image.setFitWidth(cellWidth*1.25);
