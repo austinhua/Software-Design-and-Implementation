@@ -1,0 +1,9 @@
+
+
+- Who should handle grid type (toroidal, infinite, finite) and who should handle grid shape (square, triangular, hexagonal)
+	- Make previous Grid and Cell classes abstract and extend them to the previous and new types
+	- Give responsibility to Cell class to handle neighbors (since it handles grid shape)
+	 
+- Separate Grid from Simulation (Simulation no longer creates the grid object)
+- Who handles saving simulations? -> New static method in main? Since saving is a "function"?
+

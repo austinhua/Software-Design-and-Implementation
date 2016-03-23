@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<simulation cellShape="triangle" cellType="hexagonal" gridType="toro" outlined="1" simType="gameOfLife">
+<stateSet>
+<state name="0">#000000</state>
+<state name="1">#40ff00</state>
+</stateSet>
+<configSet>
+<config name="numOfRows">50</config>
+<config name="numOfCols">50</config>
+</configSet>
+<cellSet/>
+</simulation>

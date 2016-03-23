@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<simulation cellShape="square" cellType="square" gridType="finite" outlined="0" simType="sugerScape">
+<stateSet>
+<state name="0">#be5056</state>
+<state name="1">#ffd812</state>
+</stateSet>
+<configSet>
+<config name="numOfRows">51</config>
+<config name="numOfCols">51</config>
+</configSet>
+<cellSet/>
+</simulation>

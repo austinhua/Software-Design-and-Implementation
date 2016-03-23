@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<simulation cellShape="triangle" cellType="triangle" gridType="toro" outlined="1" simType="segregation">
+<stateSet>
+<state name="0">#be5056</state>
+<state name="1">#56be50</state>
+<state name="2">#ffd812</state>
+</stateSet>
+<configSet>
+<config name="numOfRows">10</config>
+<config name="numOfCols">10</config>
+<config name="satisfactionThreshold">0.3</config>
+</configSet>
+<cellSet/>
+</simulation>

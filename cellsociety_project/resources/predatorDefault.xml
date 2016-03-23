@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<simulation cellShape="square" cellType="square" gridType="infinite" outlined="1" simType="predator">
+<stateSet>
+<state name="0">#ffffff</state>
+<state name="1">#ffd812</state>
+<state name="2">#56be50</state>
+</stateSet>
+<configSet>
+<config name="numOfRows">50</config>
+<config name="numOfCols">50</config>
+</configSet>
+<cellSet/>
+</simulation>
