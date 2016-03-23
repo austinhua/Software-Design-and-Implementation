@@ -1,0 +1,9 @@
+
+
+Making a final class called UserDefinedFunction to handle user created functions, 
+making it open to the package only because anyone outside the package doesn't need to access/know about it
+
+Using DoubleValues to send the value of a command to another command before it is known
+
+
+

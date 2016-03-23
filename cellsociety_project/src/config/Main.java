@@ -28,7 +28,7 @@ public class Main extends Application{
 	 * @throws IOException 
 	 */
 	private static Stage myStage;
-	private static final String DEFAULT_FILENAME = "resources/gameOfLifeDefault.xml";
+	private static final String DEFAULT_FILENAME = "resources/saved/gameOfLifeSpecial.xml";
 	public static final String SQUARE_CELLS = "square";
 	public static final String TRIANGULAR_CELLS = "triangle";
 	public static final String HEXAGONAL_CELLS = "hexagon";
