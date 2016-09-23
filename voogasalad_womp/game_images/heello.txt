@@ -1,0 +1,5 @@
+<game__data.GameData>
+  <mySettings class="auth_environment.backend.GameSettings">
+    <myName>hello</myName>
+  </mySettings>
+</game__data.GameData>

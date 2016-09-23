@@ -1,0 +1,81 @@
+.root {
+    vboxcolor: #575C5A;
+}
+
+.background {
+    -fx-background-color: #C1DAD6;
+}
+
+.label {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: black;
+    -fx-opacity: 1;
+}
+
+.menu-bar {
+    -fx-background-color: derive(#F5FAFA,20%);
+}
+
+.context-menu {
+    -fx-background-color: derive(#F5FAFA,50%);
+}
+
+.menu-bar .label {
+    -fx-font-size: 10pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: black;
+    -fx-opacity: 0.9;
+}
+
+.menu .left-container {
+    -fx-background-color: black;
+}
+
+.text-field {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-opacity: 0;
+}
+
+.tab-pane
+{
+    -fx-tab-min-width:90px;
+}
+
+.tab{
+    -fx-background-insets: 0 1 0 1,0,0;
+}
+.tab-pane .tab
+{
+    -fx-background-color: #ACD1E9;
+
+}
+
+.tab-pane .tab:selected
+{
+    -fx-background-color: #6D929B;
+}
+
+.tab .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: black;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab:selected .tab-label { 
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+}
+
+.vbox {
+    -fx-background-color: vboxcolor;
+}
+
+.hbox {
+    -fx-background-color: #ACD1E9;
+}

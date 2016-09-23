@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="images/" kind="src" path="src"/>
+	<classpathentry kind="src" path="game_images"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="src/game_data/xmlpull-1.1.3.1.jar"/>
+	<classpathentry kind="lib" path="src/game_data/xpp3_min-1.1.4c.jar"/>
+	<classpathentry kind="lib" path="src/game_data/xstream-1.4.9.jar"/>
+	<classpathentry kind="lib" path="utility_jars/box-java-sdk-2.1.1.jar"/>
+	<classpathentry kind="lib" path="utility_jars/minimal-json-0.9.1.jar"/>
+	<classpathentry kind="lib" path="utility_jars/twilio-java-sdk-beta-5.2.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="output" path="game_engine/bin"/>
+</classpath>

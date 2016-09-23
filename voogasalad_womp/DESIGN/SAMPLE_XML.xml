@@ -1,0 +1,39 @@
+<GameType>
+	<Towers>
+		<Tower>
+			<Name>SampleTower</Name>
+			<Projectile>Dart</Projectile>
+			<RateOfFire>2.4</RateOfFile>
+			<Cost>920</Cost>
+			<Image>4.jpg</Image>
+		</Tower>
+	</Towers>
+	<Projectiles>
+		<Projectile>
+			<Name>Dart</Name>
+			<Damage>20</Damage>
+			<AreaOfEffect>No</AreaOfEffect>
+		</Projectile>
+		<Projectile>
+			<Name>Arrow</Name>
+			<Damage>35</Damage>
+		</Projectile>
+	</Projectiles>
+	<Enemies>
+		<Enemy>
+			<Name>Red Balloon</Name>
+			<Image>Red.jpg</Image>
+			<Health>250</Health>
+			<Speed>4.5</Speed>
+			<DestroyedInto>Blue Baloon</DestroyedInto>
+		</Enemy>
+		<Enemy>
+			<Name>Blue Balloon</Name>
+			<Image>Blue.jpg</Image>
+			<Health>50</Health>
+			<Speed>9.0</Speed>
+			<DestroyedInto></DestroyedInto>
+		</Enemy>
+	</Enemies>
+</GameType>
+
